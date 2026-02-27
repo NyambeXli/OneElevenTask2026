@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Character Sorter</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        h1 { color: #1a73e8; margin-bottom: 1.5rem; }
+        input { width: 100%; padding: 12px; margin-bottom: 1rem; border: 2px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+        button { width: 100%; padding: 12px; background-color: #1a73e8; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; transition: background 0.3s; }
+        button:hover { background-color: #1557b0; }
+        #result { margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; min-height: 50px; word-wrap: break-word; color: #333; border: 1px solid #eee; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Word Sorter</h1>
+        <p>Type a word to see your API sort it!</p>
+        <input type="text" id="userInput" placeholder="Enter word (e.g. zebra)">
+        <button onclick="sortWord()">Sort Alphabetically</button>
+        <div id="result">Results will appear here...</div>
+    </div>
+
+    <script>
+        async function sortWord() {
+            const input = document.getElementById('userInput').value;
+            const resultDiv = document.getElementById('result');
+            
+            if (!input) return alert("Please enter a word");
+
+            try {
+                const response = await fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ string: input })
+                });
+
+                const data = await response.json();
+                resultDiv.innerHTML = `<strong>Sorted:</strong> ${JSON.stringify(data.word)}`;
+            } catch (error) {
+                resultDiv.innerText = "Error connecting to API";
+            }
+        }
+    </script>
+</body>
+</html>
