@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace OneElevenTask_API.Controllers
 {
     [ApiController]
-    [Route("/")] // This fixes the 404! It makes your API listen at the main URL.
+    [Route("")] 
     public class TaskController : ControllerBase
     {
-        [HttpPost]
+        [HttpPost("/")]
         public IActionResult Post([FromBody] RequestModel input)
         {
             if (input == null || string.IsNullOrEmpty(input.Data))
@@ -14,11 +14,9 @@ namespace OneElevenTask_API.Controllers
                 return BadRequest();
             }
 
-            // Convert to char array and sort alphabetically
             char[] chars = input.Data.ToCharArray();
             Array.Sort(chars);
 
-            // Return in the exact format they asked for: { "word": [...] }
             return Ok(new { word = chars });
         }
     }
