@@ -15,13 +15,13 @@ namespace OneElevenTask_API.Controllers
                 return BadRequest();
             }
 
-            var sortedList = input.Data
+            var result = input.Data
                 .ToCharArray()
                 .OrderBy(c => c)
                 .Select(c => c.ToString())
-                .ToList();
+                .ToArray();
 
-            return Ok(new { word = sortedList });
+            return Ok(new { word = result });
         }
     }
 
