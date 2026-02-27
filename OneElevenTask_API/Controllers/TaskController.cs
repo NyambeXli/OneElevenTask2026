@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace OneElevenTask_API.Controllers
 {
     [ApiController]
-    [Route("")] 
+    [Route("/")]
     public class TaskController : ControllerBase
     {
-        [HttpPost("/")]
+        [HttpPost]
         public IActionResult Post([FromBody] RequestModel input)
         {
             if (input == null || string.IsNullOrEmpty(input.Data))
@@ -14,10 +15,13 @@ namespace OneElevenTask_API.Controllers
                 return BadRequest();
             }
 
-            char[] chars = input.Data.ToCharArray();
-            Array.Sort(chars);
+            var sortedList = input.Data
+                .ToCharArray()
+                .OrderBy(c => c)
+                .Select(c => c.ToString())
+                .ToList();
 
-            return Ok(new { word = chars });
+            return Ok(new { word = sortedList });
         }
     }
 
