@@ -1,0 +1,6 @@
+@OneElevenTask_API_HostAddress = http://localhost:5023
+
+GET {{OneElevenTask_API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
