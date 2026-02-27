@@ -1,34 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
-namespace OneElevenTask.Controllers
+namespace OneElevenTask_API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("/")] // This fixes the 404! It makes your API listen at the main URL.
     public class TaskController : ControllerBase
     {
-        public class WebhookRequest
-        {
-            public string Data { get; set; } = null!;
-        }
-
-        public class WebhookResponse
-        {
-            public char[] Word { get; set; } = null!;
-        }
-
         [HttpPost]
-        public IActionResult Post([FromBody] WebhookRequest request)
+        public IActionResult Post([FromBody] RequestModel input)
         {
-            if (request == null || string.IsNullOrEmpty(request.Data))
+            if (input == null || string.IsNullOrEmpty(input.Data))
             {
-                return BadRequest(new { message = "The data field is required." });
+                return BadRequest();
             }
 
-            char[] charArray = request.Data.ToCharArray();
+            // Convert to char array and sort alphabetically
+            char[] chars = input.Data.ToCharArray();
+            Array.Sort(chars);
 
-            Array.Sort(charArray);
-
-            return Ok(new WebhookResponse { Word = charArray });
+            // Return in the exact format they asked for: { "word": [...] }
+            return Ok(new { word = chars });
         }
+    }
+
+    public class RequestModel
+    {
+        public string Data { get; set; }
     }
 }
