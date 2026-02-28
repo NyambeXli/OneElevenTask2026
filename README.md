@@ -12,14 +12,6 @@ A high-performance .NET 8 Web API designed to receive a string via a webhook, so
 - **Backend:** C# / .NET 8
 - **Frontend:** HTML5 / CSS3 / JavaScript (Vanilla)
 
-## 📥 Getting Started
-1. Clone the repository:
-   `git clone https://github.com/NyambeXli/DotNetFullStack2026.git`
-2. Navigate to the project folder:
-   `cd OneElevenTask_API`
-3. Run the application:
-   `dotnet run`
-
 ## 🧪 Testing the API
 To test the endpoint manually, send a POST request to the root URL:
 **Payload:**
